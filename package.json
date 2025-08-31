@@ -1,0 +1,36 @@
+{
+    "name": "hexo-generator-image-sitemap",
+    "version": "0.1.0",
+    "description": "Generate Image Sitemap for Hexo from rendered HTML.",
+    "main": "index.js",
+    "keywords": [
+        "hexo",
+        "sitemap",
+        "image",
+        "seo"
+    ],
+    "license": "MIT",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/DeepChirp/hexo-generator-image-sitemap.git"
+    },
+    "bugs": {
+        "url": "https://github.com/DeepChirp/hexo-generator-image-sitemap/issues"
+    },
+    "homepage": "https://github.com/DeepChirp/hexo-generator-image-sitemap#readme",
+    "peerDependencies": {
+        "hexo": ">=6.0.0"
+    },
+    "dependencies": {
+        "cheerio": "^1.1.2",
+        "fast-glob": "^3.3.3"
+    },
+    "engines": {
+        "node": ">=16"
+    },
+    "files": [
+        "index.js",
+        "README.md",
+        "LICENSE"
+    ]
+}
