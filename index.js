@@ -42,6 +42,26 @@ function extractFromHTML(html) {
     return found;
 }
 
+function extractFromButterflyGallery(html) {
+    const $ = cheerio.load(html || "");
+    const found = [];
+    $('.gallery-container[data-type="data"] .gallery-items').each((_, el) => {
+        const raw = $(el).text().trim();
+        if (!raw) return;
+        try {
+            const arr = JSON.parse(raw);
+            if (Array.isArray(arr)) {
+                for (const it of arr) {
+                    if (it && typeof it.url === "string" && it.url.trim()) {
+                        found.push(it.url.trim());
+                    }
+                }
+            }
+        } catch { }
+    });
+    return found;
+}
+
 async function listAssetsImages(assetDirAbs) {
     try {
         const patterns = ["**/*.{jpg,jpeg,png,gif,webp,avif,svg}"];
@@ -99,6 +119,7 @@ hexo.extend.generator.register("image-sitemap", async function generateImageSite
         const pagePath = new URL(loc).pathname.replace(/\/+$/, "/");
 
         const fromHtml = extractFromHTML(p.content);
+        const fromGallery = extractFromButterflyGallery(p.content);
 
         const covers = [];
         for (const k of options.cover_fields) {
@@ -115,7 +136,7 @@ hexo.extend.generator.register("image-sitemap", async function generateImageSite
         }
 
         let imgs = []
-            .concat(covers, fromHtml, assetsAll)
+            .concat(covers, fromHtml, fromGallery, assetsAll)
             .filter(Boolean)
             .map(s => s.trim());
 
